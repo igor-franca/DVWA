@@ -89,3 +89,11 @@ We get a return like this:
 | 200 | 253 W | "gordonb - abc123" |
 | 200 | 253 W | "pablo - letmein" |
 | 200 | 253 W | "smithy - password"|
+
+#### Medium level of complexity, attack all users, using Wfuzz:
+
+At this level, responses are slower than at the low level. So we can use the same approach at the low level, do the search for different word lengths. We can remove the --sw and --hs filter parameters to try to make this return faster. 
+
+> Note: We have change the cokkies parameters security and PHPSESID.
+
+Once we find a different word length, just add the filter parameters to improve the data visualization.
