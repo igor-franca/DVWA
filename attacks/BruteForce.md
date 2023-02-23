@@ -97,3 +97,21 @@ At this level, responses are slower than at the low level. So we can use the sam
 > Note: We have change the cokkies parameters security and PHPSESID.
 
 Once we find a different word length, just add the filter parameters to improve the data visualization.
+
+#### High level of complexity, attack all users, using Wfuzz:
+
+At this level, we receive a kind of cookie in the get response. The server waits for this same cookie in the url parameters to accept the next http request. So if we don't send this new valid parameter (user token) in the url, our request will not be accepted. To solve this problem, we can try to find the previously sent user_token, copy it and send it in the url parameter of the user token.
+
+> Note: We have change the cokkies parameters security and PHPSESID. 
+
+To make to that, we need to use Burp Suite again. So, the step by step to solve the DVWA Brute Force in high level is:
+
+1. Use Burp Suite Communit Edition to intercept a request.
+2. Create a intruder to intercepted request.
+3. Go to positions introducer tab set "Choose attack type" to PitchFork (This attack use a multiple payloads, and itarates through all payloads simultaneusly) and add two payloads markers to password and user_token.
+4. Go to payload introducer tab and load a list to the first password payload, in the second payload set the payload type to recursive grep.
+5. Go to Resource Pool tab and create a new resource changing only the maximum concurrent requests to 1.
+6. Go to settings introducer tab and add "incorrect" in Grep Match, select the user_token value a in Grep Extract and click in Start at offset and End at the fixed length radio buttons, finaly in Redirections section set click in Always radio button.
+7. Click in Start attack.
+
+Following these steps, we can extract the user_token and replace the url parameter so that our requests are accepted by the server.
